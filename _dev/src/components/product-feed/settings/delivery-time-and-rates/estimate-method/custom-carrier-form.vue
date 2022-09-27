@@ -4,10 +4,11 @@
       {{ $t('productFeedSettings.steps.deliveryTimesAndRates') }}
     </p>
     <p
-      v-if="validateCarrier === false"
+      v-if="validateCarrier !== null && validateCarrier?.length > 0"
       class="text-danger ps-gs_fz-14 d-inline-block"
     >
-      {{ $t('productFeedSettings.deliveryTimeAndRates.estimateStep.error') }}
+      <!-- {{ $t('productFeedSettings.deliveryTimeAndRates.estimateStep.error') }} -->
+      {{ validateCarrier.join(', ') }}
     </p>
     <b-card class="mb-2">
       <b-container>
@@ -248,7 +249,6 @@ import {
   CustomCarrier,
   validateOfferChoice,
   validateCarrierName,
-  validateCarrier,
 } from '@/providers/shipping-rate-provider';
 
 export default Vue.extend({
@@ -285,11 +285,25 @@ export default Vue.extend({
     };
   },
   computed: {
-    validateCarrier(): boolean|null {
+    validateCarrier(): string[]|null {
       if (!this.displayValidationErrors) {
         return null;
       }
-      return validateCarrier(this.customCarrier);
+      const fieldError: string[] = [];
+
+      if (validateCarrierName(this.customCarrier) === false) {
+        fieldError.push('error name');
+      }
+      if (validateDeliveryTime(this.customCarrier) === false) {
+        fieldError.push('error time');
+      }
+      if (validateOfferChoice(this.customCarrier.offer) === false) {
+        fieldError.push('error offers');
+      }
+
+      return fieldError;
+
+      // return validateCarrier(this.customCarrier);
     },
     validateTimeDelivery(): boolean|null {
       if (!this.displayValidationErrors) {
