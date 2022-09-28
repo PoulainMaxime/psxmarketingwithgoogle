@@ -4,11 +4,10 @@
       {{ $t('productFeedSettings.steps.deliveryTimesAndRates') }}
     </p>
     <p
-      v-if="validateCarrier !== null && validateCarrier?.length > 0"
+      v-if="validateCarrier === false"
       class="text-danger ps-gs_fz-14 d-inline-block"
     >
-      <!-- {{ $t('productFeedSettings.deliveryTimeAndRates.estimateStep.error') }} -->
-      {{ validateCarrier.join(', ') }}
+      {{ $t('productFeedSettings.deliveryTimeAndRates.estimateStep.error') }}
     </p>
     <b-card class="mb-2">
       <b-container>
@@ -43,6 +42,12 @@
                   :placeholder="$t('productFeedSettings.attributeMapping.description')"
                   maxlength="90"
                 />
+                <div
+                  v-if="validateFields('carrierName') === false"
+                  class="text-danger"
+                >
+                  {{ validateFields('carrierName') }}
+                </div>
               </div>
             </div>
 
@@ -81,6 +86,12 @@
                   <p class="ps_gs-fz-10">
                     {{ $t('productFeedSettings.deliveryTimeAndRates.deliveryInfo') }}
                   </p>
+                </div>
+                <div
+                  v-if="validateFields('deliveryTime') === false"
+                  class="text-danger"
+                >
+                  {{ validateFields('deliveryTime') }}
                 </div>
               </b-col>
               <b-col>
@@ -233,6 +244,12 @@
                   </b-col>
                 </b-row>
               </div>
+              <div
+                v-if="validateFields('offerDetail') === false"
+                class="text-danger"
+              >
+                {{ validateFields('offerDetail') }}
+              </div>
             </b-card>
             <!-- eslint-enable max-len -->
           </b-col>
@@ -249,6 +266,8 @@ import {
   CustomCarrier,
   validateOfferChoice,
   validateCarrierName,
+  validateCarrier,
+validateOffers,
 } from '@/providers/shipping-rate-provider';
 
 export default Vue.extend({
@@ -285,25 +304,11 @@ export default Vue.extend({
     };
   },
   computed: {
-    validateCarrier(): string[]|null {
+    validateCarrier(): boolean|null {
       if (!this.displayValidationErrors) {
         return null;
       }
-      const fieldError: string[] = [];
-
-      if (validateCarrierName(this.customCarrier) === false) {
-        fieldError.push('error name');
-      }
-      if (validateDeliveryTime(this.customCarrier) === false) {
-        fieldError.push('error time');
-      }
-      if (validateOfferChoice(this.customCarrier.offer) === false) {
-        fieldError.push('error offers');
-      }
-
-      return fieldError;
-
-      // return validateCarrier(this.customCarrier);
+      return validateCarrier(this.customCarrier);
     },
     validateTimeDelivery(): boolean|null {
       if (!this.displayValidationErrors) {
@@ -332,6 +337,19 @@ export default Vue.extend({
     },
   },
   methods: {
+    validateFields(field: string): boolean|null {
+      if (!this.displayValidationErrors) {
+        return null;
+      }
+      const validateFields: string[] = [];
+      // eslint-disable dot-notation
+      validateFields['carrierName'] = validateCarrierName(this.customCarrier);
+      validateFields['offer'] = validateOfferChoice(this.customCarrier.offer);
+      validateFields['offerDetail'] = validateOffers(this.customCarrier);
+      validateFields['deliveryTime'] = validateDeliveryTime(this.customCarrier);
+
+      return validateFields[field];
+    },
     validateAmountRate(amount: number|null): boolean|null {
       if (!this.displayValidationErrors) {
         return null;
