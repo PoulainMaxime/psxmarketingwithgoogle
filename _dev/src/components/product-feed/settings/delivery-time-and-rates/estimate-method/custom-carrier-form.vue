@@ -5,7 +5,7 @@
     </p>
     <p
       v-if="validateCarrier === false"
-      class="text-danger ps-gs_fz-14 d-inline-block"
+      class="text-danger ps_gs-fz-error d-inline-block"
     >
       {{ $t('productFeedSettings.deliveryTimeAndRates.estimateStep.error') }}
     </p>
@@ -34,7 +34,7 @@
               <div class="mb-4">
                 <b-form-input
                   type="text"
-                  class="form-control ps_gs-mw-200"
+                  class="form-control ps_gs-mw-200 mb-1"
                   id="carrierName"
                   v-model="customCarrier.carrierName"
                   @input="$emit('dataUpdated', customCarrier)"
@@ -44,9 +44,9 @@
                 />
                 <div
                   v-if="validateFields('carrierName') === false"
-                  class="text-danger"
+                  class="text-danger ps_gs-fz-error"
                 >
-                  {{ validateFields('carrierName') }}
+                  carrierName must be filled and not exceeded 90 letters.
                 </div>
               </div>
             </div>
@@ -75,7 +75,9 @@
             </div>
           </b-col>
           <b-col>
-            <b-row class="mb-4">
+            <b-row
+              :class="validateFields('deliveryTime') === false ? '' : 'mb-4'"
+            >
               <b-col>
                 <div class="deliveryTime">
                   <div
@@ -89,9 +91,9 @@
                 </div>
                 <div
                   v-if="validateFields('deliveryTime') === false"
-                  class="text-danger"
+                  class="text-danger mb-4 ps_gs-fz-error"
                 >
-                  {{ validateFields('deliveryTime') }}
+                  DeliveryTime must be filled.
                 </div>
               </b-col>
               <b-col>
@@ -148,7 +150,7 @@
                   <div>
                     <b-input-group
                       :append="getSymbol"
-                      class="ps_gs-carrier__input-number-group"
+                      class="ps_gs-carrier__input-number-group flex-nowrap"
                     >
                       <b-form-input
                         type="number"
@@ -228,7 +230,7 @@
                   <b-col class="col-auto">
                     <b-input-group
                       :append="getSymbol"
-                      class="ps_gs-carrier__input-number-group"
+                      class="ps_gs-carrier__input-number-group flex-nowrap"
                     >
                       <b-form-input
                         type="number"
@@ -246,9 +248,9 @@
               </div>
               <div
                 v-if="validateFields('offerDetail') === false"
-                class="text-danger"
+                class="text-danger ps_gs-fz-error"
               >
-                {{ validateFields('offerDetail') }}
+                fields must be filled, accept only numbers and floating numbers
               </div>
             </b-card>
             <!-- eslint-enable max-len -->
