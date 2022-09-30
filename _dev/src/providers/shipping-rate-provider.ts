@@ -37,24 +37,30 @@ export function validateCarrier(carrier: CustomCarrier): boolean {
   return true;
 }
 
-export function validateCarrierName(carrier: CustomCarrier): boolean {
-  if (carrier.carrierName === '') {
+export function validateCarrierName(carrier: CustomCarrier): boolean|undefined {
+  if (carrier.carrierName === '' || carrier.carrierName.length <= 0) {
     return false;
   }
 
-  if (carrier.carrierName.length > 90 || carrier.carrierName.length <= 0) {
-    return false;
+  if (carrier.carrierName.length > 90) {
+    return undefined;
   }
 
   return true;
 }
 
-export function validateDeliveryTime(carrier: CustomCarrier): boolean {
-  return Number.isInteger(carrier.minDeliveryTime)
-    && Number.isInteger(carrier.maxDeliveryTime)
-    && Number(carrier.minDeliveryTime) <= Number(carrier.maxDeliveryTime)
-    && Number(carrier.minDeliveryTime) >= 0
-    && Number(carrier.maxDeliveryTime) >= 0;
+export function validateDeliveryTime(carrier: CustomCarrier): boolean|undefined {
+  if (Number.isInteger(carrier.minDeliveryTime) === false
+      || Number.isInteger(carrier.maxDeliveryTime) === false
+      || Number(carrier.minDeliveryTime) <= 0
+      || Number(carrier.maxDeliveryTime) <= 0) {
+    return false;
+  }
+  if (Number(carrier.minDeliveryTime) >= Number(carrier.maxDeliveryTime)) {
+    return undefined;
+  }
+
+  return true;
 }
 
 export function validateOffers(carrier: CustomCarrier): boolean {

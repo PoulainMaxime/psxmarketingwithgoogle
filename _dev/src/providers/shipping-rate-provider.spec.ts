@@ -38,10 +38,10 @@ describe('Product Feed / Step 2 Option 1 / Estimate Shipping', () => {
       ...carrier,
       carrierName: 'qwertyuiopqwertyuiopqwertyuiopqwertyuiopqwertyuiopqwertyuiopqwertyuiopqwertyuiopqwertyuiopqdadassaas',
     };
-    expect(validateCarrierName(mock)).toBe(false);
+    expect(validateCarrierName(mock)).toBe(undefined);
   });
 
-  it('should fails when max delivery > min delivery time is missing', () => {
+  it('should fails when min delivery > max delivery time is missing', () => {
     const mock = {
       carrierName: '',
       offer: OfferType.FREE_SHIPPING,
@@ -59,7 +59,7 @@ describe('Product Feed / Step 2 Option 1 / Estimate Shipping', () => {
       },
     };
 
-    expect(validateDeliveryTime(mock)).toBe(false);
+    expect(validateDeliveryTime(mock)).toBe(undefined);
   });
 
   it('should fails when delivery time is negative', () => {

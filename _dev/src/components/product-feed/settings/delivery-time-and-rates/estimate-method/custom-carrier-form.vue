@@ -43,10 +43,12 @@
                   maxlength="90"
                 />
                 <div
-                  v-if="validateFields('carrierName') === false"
+                  v-if="validateFields('carrierName') === undefined"
                   class="text-danger ps_gs-fz-error"
                 >
-                  carrierName must be filled and not exceeded 90 letters.
+                  {{
+                    $t('productFeedSettings.deliveryTimeAndRates.estimateStep.errors.carrierName')
+                  }}
                 </div>
               </div>
             </div>
@@ -76,7 +78,7 @@
           </b-col>
           <b-col>
             <b-row
-              :class="validateFields('deliveryTime') === false ? '' : 'mb-4'"
+              :class="validateFields('deliveryTime') === undefined ? '' : 'mb-4'"
             >
               <b-col>
                 <div class="deliveryTime">
@@ -90,10 +92,12 @@
                   </p>
                 </div>
                 <div
-                  v-if="validateFields('deliveryTime') === false"
+                  v-if="validateFields('deliveryTime') === undefined"
                   class="text-danger mb-4 ps_gs-fz-error"
                 >
-                  DeliveryTime must be filled.
+                  {{
+                    $t('productFeedSettings.deliveryTimeAndRates.estimateStep.errors.deliveryTime')
+                  }}
                 </div>
               </b-col>
               <b-col>
@@ -246,12 +250,12 @@
                   </b-col>
                 </b-row>
               </div>
-              <div
-                v-if="validateFields('offerDetail') === false"
+              <!-- <div
+                v-if="validateFields('offerDetail') === undefined"
                 class="text-danger ps_gs-fz-error"
               >
-                fields must be filled, accept only numbers and floating numbers
-              </div>
+                {{ $t('productFeedSettings.deliveryTimeAndRates.estimateStep.errors.offers') }}
+              </div> -->
             </b-card>
             <!-- eslint-enable max-len -->
           </b-col>
@@ -269,7 +273,7 @@ import {
   validateOfferChoice,
   validateCarrierName,
   validateCarrier,
-validateOffers,
+  validateOffers,
 } from '@/providers/shipping-rate-provider';
 
 export default Vue.extend({
@@ -322,7 +326,7 @@ export default Vue.extend({
       if (!this.displayValidationErrors) {
         return null;
       }
-      return validateCarrierName(this.customCarrier);
+      return validateCarrierName(this.customCarrier) ? null : false;
     },
     validateRadio(): boolean|null {
       if (!this.displayValidationErrors) {
@@ -339,18 +343,16 @@ export default Vue.extend({
     },
   },
   methods: {
-    validateFields(field: string): boolean|null {
+    validateFields(field: string): boolean|null|undefined {
       if (!this.displayValidationErrors) {
         return null;
       }
-      const validateFields: string[] = [];
-      // eslint-disable dot-notation
-      validateFields['carrierName'] = validateCarrierName(this.customCarrier);
-      validateFields['offer'] = validateOfferChoice(this.customCarrier.offer);
-      validateFields['offerDetail'] = validateOffers(this.customCarrier);
-      validateFields['deliveryTime'] = validateDeliveryTime(this.customCarrier);
+      const validateFields: Map<string, boolean|undefined> = new Map();
+      validateFields.set('carrierName', validateCarrierName(this.customCarrier));
+      validateFields.set('offerDetail', validateOffers(this.customCarrier));
+      validateFields.set('deliveryTime', validateDeliveryTime(this.customCarrier));
 
-      return validateFields[field];
+      return validateFields.get(field);
     },
     validateAmountRate(amount: number|null): boolean|null {
       if (!this.displayValidationErrors) {

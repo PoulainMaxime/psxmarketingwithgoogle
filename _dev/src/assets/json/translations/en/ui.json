@@ -283,6 +283,11 @@
         "error": "Fill in the required information",
         "carrierName": "Carrier name",
         "storeOffersTitle": "My store offers",
+        "errors": {
+          "carrierName": "Fields must not exceeded 90 letters.",
+          "deliveryTime": "Minimum must be inferior than Maximum",
+          "offers": "Accept only numbers & floating numbers"
+        },
         "storeOffers": {
           "flatShippingRateForAllProducts": "Flat shipping rate for all products",
           "freeShippingForAllProducts": "Free shipping for all products",
