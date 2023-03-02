@@ -1,0 +1,15 @@
+(window["webpackJsonp"] = window["webpackJsonp"] || []).push([["legacyVideos"],{
+
+/***/ "../../node_modules/.pnpm/@segment+analytics-next@1.44.0/node_modules/@segment/analytics-next/dist/pkg/plugins/legacy-video-plugins/index.js":
+/*!*************************************************************************************************************************************************************************************************************!*\
+  !*** /Users/mPoulain/Desktop/Lab/Modules/psxmarketingwithgoogle/_dev/node_modules/.pnpm/@segment+analytics-next@1.44.0/node_modules/@segment/analytics-next/dist/pkg/plugins/legacy-video-plugins/index.js ***!
+  \*************************************************************************************************************************************************************************************************************/
+/*! exports provided: loadLegacyVideoPlugins */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"loadLegacyVideoPlugins\", function() { return loadLegacyVideoPlugins; });\n/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ \"../../node_modules/.pnpm/tslib@2.4.0/node_modules/tslib/tslib.es6.js\");\n\nfunction loadLegacyVideoPlugins(analytics) {\n    return Object(tslib__WEBPACK_IMPORTED_MODULE_0__[\"__awaiter\"])(this, void 0, void 0, function () {\n        var plugins;\n        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__[\"__generator\"])(this, function (_a) {\n            switch (_a.label) {\n                case 0: return [4 /*yield*/, __webpack_require__.e(/*! import() */ 0).then(__webpack_require__.t.bind(null, /*! @segment/analytics.js-video-plugins/dist/index.umd.js */ \"../../node_modules/.pnpm/@segment+analytics.js-video-plugins@0.2.1/node_modules/@segment/analytics.js-video-plugins/dist/index.umd.js\", 7))\n                    // This is super gross, but we need to support the `window.analytics.plugins` namespace\n                    // that is linked in the segment docs in order to be backwards compatible with ajs-classic\n                    // @ts-expect-error\n                ];\n                case 1:\n                    plugins = _a.sent();\n                    // This is super gross, but we need to support the `window.analytics.plugins` namespace\n                    // that is linked in the segment docs in order to be backwards compatible with ajs-classic\n                    // @ts-expect-error\n                    analytics._plugins = plugins;\n                    return [2 /*return*/];\n            }\n        });\n    });\n}\n//# sourceMappingURL=index.js.map\n\n//# sourceURL=webpack:////Users/mPoulain/Desktop/Lab/Modules/psxmarketingwithgoogle/_dev/node_modules/.pnpm/@segment+analytics-next@1.44.0/node_modules/@segment/analytics-next/dist/pkg/plugins/legacy-video-plugins/index.js?");
+
+/***/ })
+
+}]);
